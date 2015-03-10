@@ -8,6 +8,7 @@ class Product
   attr_accessor :item_id, :description, :price, :cost, :price_type, :quantity_on_hand,
     :modifier_1_name, :modifier_1_price, :modifier_2_name, :modifier_2_price, :modifier_3_name, :modifier_3_price
 
+
   def initialize params = {}
     params.each do |k, v|
       self.send("#{k}=", v)
@@ -29,6 +30,8 @@ class Product
   end
 
   def save
+    method(@@before_save).call
+
     @@products ||= []
     @@products << self
   end
@@ -49,5 +52,20 @@ class Product
 
   def self._to_json
     to_hash.to_json
+  end
+
+  protected
+
+  def self.before_save callback
+    @@before_save = callback
+  end
+
+  before_save :remove_dollar
+
+  # define callback
+  def remove_dollar
+    %w(price cost modifier_1_price modifier_2_price modifier_3_price).each do |_price|
+      self.send(_price).gsub!("$", "") if self.send(_price)
+    end
   end
 end
