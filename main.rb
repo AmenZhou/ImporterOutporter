@@ -14,5 +14,5 @@ def import_data path, file_type
   end
 end
 
-import_data("/home/action/input.csv", :csv)
-p Product._to_json
+#import_data("./input.csv", :csv)
+#p Product._to_json
