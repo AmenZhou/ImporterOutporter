@@ -39,8 +39,8 @@ describe "input csv file" do
     context "which includes" do
       it "item id is a number" do
         @products.each do |product|
-          expect(product.item_id).to match(/\d+/)
-          expect(product.item_id).to_not match(/\D+/)
+          expect(product.item_id).to match(/\A\d+\Z/)
+          expect(product.item_id).to_not match(/\A\D+\Z/)
         end
       end
 
@@ -50,8 +50,7 @@ describe "input csv file" do
 
       it "price is a number" do
         @products.each do |product|
-          expect(product.price).to match(/\d+/) unless product.price.empty?
-          expect(product.price).to match(/\D+/) unless product.price.empty?
+          expect(product.price).to match(/\A\d+\.\d+\Z/) unless product.price.empty?
         end
       end
 
