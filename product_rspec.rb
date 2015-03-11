@@ -61,4 +61,26 @@ describe "input csv file" do
       end
     end
   end
+
+  context "output product to json" do
+    before :all do
+      @json = Product._to_json
+    end
+
+    context "could be parsed to an array" do
+      before :all do
+        @json = JSON.parse(@json)
+      end
+
+      it "include all records" do
+        expect(@json.class).to eq(Array)
+        expect(@json.count).to eq(14)
+      end
+
+      it "has unique records" do
+        expect(@json.map{ |product| product["id"] }.uniq.count).to eq(14)
+      end
+    end
+  end
 end
+

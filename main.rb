@@ -2,6 +2,9 @@
 
 require_relative "./product"
 require_relative "./csv_parse"
+require_relative "./string"
+require 'json'
+
 include CsvParse
 
 # use different parser for different file type
